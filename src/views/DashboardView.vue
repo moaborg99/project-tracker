@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { Component } from 'vue'
-import { FolderKanban, SquareCheckBig, TrendingUp, Users, ArrowRight } from '@lucide/vue'
+import { FolderKanban, SquareCheckBig, TrendingUp, Users, ArrowRight, Clock } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
 
 type Stat = {
@@ -23,6 +23,13 @@ type Project = {
   statusProgressColor: string
   completedTasks: number
   totalTasks: number
+  dueDate: string
+}
+
+type Task = {
+  name: string
+  project: string
+  assignedTo: string
   dueDate: string
 }
 
@@ -115,6 +122,37 @@ const getProjectProgress = (project: Project) => {
 
   return Math.round((project.completedTasks / project.totalTasks) * 100)
 }
+
+const upcomingTasks: Task[] = [
+  {
+    name: 'Design Landing Page',
+    project: 'Project Alpha',
+    assignedTo: 'Alice Cooper',
+    dueDate: '2026-09-20',
+  },
+  {
+    name: 'Set Up Database',
+    project: 'Project Beta',
+    assignedTo: 'Bob Marley',
+    dueDate: '2026-09-18',
+  },
+  {
+    name: 'Write API Documentation',
+    project: 'Project Gamma',
+    assignedTo: 'Charlie Chaplin',
+    dueDate: '2026-09-25',
+  },
+]
+
+const getInitials = (fullName: string) => {
+  return fullName
+    .trim()
+    .split(' ')
+    .filter(Boolean)
+    .map((name) => name[0])
+    .join('')
+    .toUpperCase()
+}
 </script>
 <template>
   <main>
@@ -195,6 +233,47 @@ const getProjectProgress = (project: Project) => {
               <span> {{ project.completedTasks }}/{{ project.totalTasks }} tasks </span>
 
               <span v-if="project.dueDate"> Due {{ project.dueDate }} </span>
+            </div>
+          </li>
+        </ul>
+      </CardContent>
+    </Card>
+
+    <Card class="mt-6">
+      <CardHeader class="flex justify-between border-b">
+        <CardTitle class="text-lg mb-2">Upcoming Deadlines</CardTitle>
+        <span class="flex gap-2 items-center text-sm text-slate-500"
+          ><Clock class="h-4 w-4"></Clock>Next 14 days</span
+        >
+      </CardHeader>
+
+      <CardContent>
+        <ul>
+          <li
+            v-for="task in upcomingTasks"
+            :key="task.name"
+            class="border-b border-slate-200 py-5 last:border-b-0"
+          >
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <h3 class="font-semibold">
+                  {{ task.name }}
+                </h3>
+
+                <p class="mt-1 text-sm text-slate-500">
+                  {{ task.project }}
+                </p>
+              </div>
+
+              <div class="flex shrink-0 items-center gap-3">
+                <span class="rounded-full bg-indigo-600 px-2 py-2 text-xs font-semibold text-white">
+                  {{ getInitials(task.assignedTo) }}
+                </span>
+
+                <span class="text-sm font-medium text-slate-600">
+                  {{ task.dueDate }}
+                </span>
+              </div>
             </div>
           </li>
         </ul>
