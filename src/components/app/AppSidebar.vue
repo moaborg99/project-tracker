@@ -14,7 +14,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <aside class="min-h-screen w-64 border-r border-slate-200 bg-white">
+  <aside class="h-screen w-64 border-r border-slate-200 bg-white">
     <div class="flex h-16 items-center justify-between border-b border-slate-200 px-6 mb-6">
       <span class="text-lg font-semibold">Project Tracker</span>
 

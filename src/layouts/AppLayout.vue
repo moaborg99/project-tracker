@@ -18,7 +18,7 @@ const closeSidebar = () => {
 <template>
   <div class="min-h-screen bg-slate-50">
     <div class="flex min-h-screen">
-      <div class="hidden lg:block">
+      <div class="hidden lg:sticky lg:top-0 lg:block lg:h-screen">
         <AppSidebar />
       </div>
 

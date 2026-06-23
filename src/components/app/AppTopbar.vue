@@ -10,7 +10,9 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <header class="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6">
+  <header
+    class="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6"
+  >
     <div class="flex items-center gap-3">
       <button
         type="button"
