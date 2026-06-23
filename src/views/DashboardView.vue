@@ -33,6 +33,14 @@ type Task = {
   dueDate: string
 }
 
+type Activity = {
+  user: string
+  action: string
+  target: string
+  createdAt: string
+  type: 'completed' | 'commented' | 'created' | 'updated' | 'joined'
+}
+
 const stats: Stat[] = [
   {
     title: 'Total Projects',
@@ -153,6 +161,22 @@ const getInitials = (fullName: string) => {
     .join('')
     .toUpperCase()
 }
+const recentActivities: Activity[] = [
+  {
+    user: 'Marcus Bobby',
+    action: 'completed',
+    target: 'Design system token audit',
+    createdAt: '28m ago',
+    type: 'completed',
+  },
+  {
+    user: 'James Bond',
+    action: 'merged',
+    target: 'PR #142 — Rate limiting middleware',
+    createdAt: '1h ago',
+    type: 'updated',
+  },
+]
 </script>
 <template>
   <main>
@@ -266,13 +290,54 @@ const getInitials = (fullName: string) => {
               </div>
 
               <div class="flex shrink-0 items-center gap-3">
-                <span class="rounded-full bg-indigo-600 px-2 py-2 text-xs font-semibold text-white">
+                <span
+                  class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-semibold text-white"
+                >
                   {{ getInitials(task.assignedTo) }}
                 </span>
 
                 <span class="text-sm font-medium text-slate-600">
                   {{ task.dueDate }}
                 </span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </CardContent>
+    </Card>
+
+    <Card class="mt-6">
+      <CardHeader class="flex justify-between border-b">
+        <CardTitle class="text-lg mb-2">Recent Activity</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <ul>
+          <li
+            v-for="activity in recentActivities"
+            :key="`${activity.user}-${activity.target}`"
+            class="border-b border-slate-200 py-5 last:border-b-0"
+          >
+            <div class="flex gap-4">
+              <div>
+                <span
+                  class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600 text-xs font-semibold text-white"
+                >
+                  {{ getInitials(activity.user) }}
+                </span>
+              </div>
+              <div>
+                <h3>
+                  <span class="font-semibold">
+                    {{ activity.user }}
+                  </span>
+
+                  {{ activity.action }} "{{ activity.target }}"
+                </h3>
+
+                <p class="mt-1 text-sm text-slate-500">
+                  {{ activity.createdAt }}
+                </p>
               </div>
             </div>
           </li>
