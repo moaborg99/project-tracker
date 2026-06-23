@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { Component } from 'vue'
-import { FolderKanban, SquareCheckBig, TrendingUp, Users } from '@lucide/vue'
+import { FolderKanban, SquareCheckBig, TrendingUp, Users, ArrowRight } from '@lucide/vue'
+import { RouterLink } from 'vue-router'
 
 type Stat = {
   title: string
@@ -12,6 +13,17 @@ type Stat = {
   icon: Component
   iconColor?: string
   backgroundColorIcon?: string
+}
+
+type Project = {
+  name: string
+  status: 'In Progress' | 'In Review' | 'To Do' | 'Done'
+  statusTextColor: string
+  statusBgColor: string
+  statusProgressColor: string
+  completedTasks: number
+  totalTasks: number
+  dueDate: string
 }
 
 const stats: Stat[] = [
@@ -52,6 +64,57 @@ const stats: Stat[] = [
     backgroundColorIcon: 'bg-violet-50',
   },
 ]
+
+const projects: Project[] = [
+  {
+    name: 'Project Alpha',
+    status: 'In Progress',
+    completedTasks: 7,
+    statusBgColor: 'bg-blue-50',
+    statusTextColor: 'text-blue-600',
+    totalTasks: 10,
+    dueDate: '2026-09-23',
+    statusProgressColor: 'bg-indigo-600',
+  },
+  {
+    name: 'Project Beta',
+    status: 'In Review',
+    completedTasks: 9,
+    statusBgColor: 'bg-yellow-50',
+    statusTextColor: 'text-yellow-600',
+    totalTasks: 10,
+    dueDate: '2026-09-15',
+    statusProgressColor: 'bg-yellow-600',
+  },
+  {
+    name: 'Project Gamma',
+    status: 'To Do',
+    completedTasks: 0,
+    statusBgColor: 'bg-gray-50',
+    statusTextColor: 'text-gray-600',
+    totalTasks: 5,
+    dueDate: '2026-10-01',
+    statusProgressColor: 'bg-gray-600',
+  },
+  {
+    name: 'Project Delta',
+    status: 'Done',
+    completedTasks: 10,
+    statusBgColor: 'bg-green-50',
+    statusTextColor: 'text-green-600',
+    totalTasks: 10,
+    dueDate: '2026-05-30',
+    statusProgressColor: 'bg-green-600',
+  },
+]
+
+const getProjectProgress = (project: Project) => {
+  if (project.totalTasks === 0) {
+    return 0
+  }
+
+  return Math.round((project.completedTasks / project.totalTasks) * 100)
+}
 </script>
 <template>
   <main>
@@ -80,5 +143,62 @@ const stats: Stat[] = [
         </CardContent>
       </Card>
     </div>
+
+    <Card class="mt-6">
+      <CardHeader class="flex justify-between border-b">
+        <CardTitle class="text-lg mb-2">Project Progress</CardTitle>
+        <RouterLink
+          to="/projects"
+          class="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+        >
+          View all <ArrowRight class="inline h-4 w-4" />
+        </RouterLink>
+      </CardHeader>
+
+      <CardContent>
+        <ul>
+          <li
+            v-for="project in projects"
+            :key="project.name"
+            class="border-b border-slate-200 py-5 last:border-b-0"
+          >
+            <div class="flex items-center justify-between gap-4">
+              <h3 class="font-semibold">
+                {{ project.name }}
+              </h3>
+
+              <div class="flex shrink-0 items-center gap-3">
+                <span
+                  :class="[
+                    'rounded-full px-3 py-1 text-sm font-medium',
+                    project.statusTextColor,
+                    project.statusBgColor,
+                  ]"
+                >
+                  {{ project.status }}
+                </span>
+
+                <span class="text-sm font-medium text-slate-600">
+                  {{ getProjectProgress(project) }}%
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-3 h-2 w-full rounded-full bg-slate-100">
+              <div
+                :class="['h-2 rounded-full', project.statusProgressColor]"
+                :style="{ width: `${getProjectProgress(project)}%` }"
+              />
+            </div>
+
+            <div class="mt-3 flex items-center justify-between text-sm text-slate-500">
+              <span> {{ project.completedTasks }}/{{ project.totalTasks }} tasks </span>
+
+              <span v-if="project.dueDate"> Due {{ project.dueDate }} </span>
+            </div>
+          </li>
+        </ul>
+      </CardContent>
+    </Card>
   </main>
 </template>
