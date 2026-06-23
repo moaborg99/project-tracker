@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { Component } from 'vue'
-import { FolderKanban, SquareCheckBig, TrendingUp, Users, ArrowRight, Clock } from '@lucide/vue'
-import { RouterLink } from 'vue-router'
+import { FolderKanban, SquareCheckBig, TrendingUp, Users } from '@lucide/vue'
+import ProjectProgressSection from '@/components/dashboard/ProjectProgressSection.vue'
+import UpcomingDeadlinesSection from '@/components/dashboard/UpcomingDeadlinesSection.vue'
+import RecentActivitySection from '@/components/dashboard/RecentActivitySection.vue'
+import DashboardStats from '@/components/dashboard/DashboardStats.vue'
 
 type Stat = {
   title: string
@@ -123,14 +125,6 @@ const projects: Project[] = [
   },
 ]
 
-const getProjectProgress = (project: Project) => {
-  if (project.totalTasks === 0) {
-    return 0
-  }
-
-  return Math.round((project.completedTasks / project.totalTasks) * 100)
-}
-
 const upcomingTasks: Task[] = [
   {
     name: 'Design Landing Page',
@@ -152,15 +146,6 @@ const upcomingTasks: Task[] = [
   },
 ]
 
-const getInitials = (fullName: string) => {
-  return fullName
-    .trim()
-    .split(' ')
-    .filter(Boolean)
-    .map((name) => name[0])
-    .join('')
-    .toUpperCase()
-}
 const recentActivities: Activity[] = [
   {
     user: 'Marcus Bobby',
@@ -180,169 +165,12 @@ const recentActivities: Activity[] = [
 </script>
 <template>
   <main>
-    <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-3">
-      <Card v-for="stat in stats" :key="stat.title">
-        <CardHeader class="flex flex-row items-center justify-between">
-          <CardTitle>{{ stat.title }}</CardTitle>
-          <div :class="['p-2 rounded', stat.backgroundColorIcon]">
-            <component :is="stat.icon" :class="['h-4 w-4', stat.iconColor]" />
-          </div>
-        </CardHeader>
+    <DashboardStats :stats="stats" />
 
-        <CardContent>
-          <div class="text-4xl font-bold">
-            {{ stat.value }}
-          </div>
+    <ProjectProgressSection :projects="projects" />
 
-          <p class="mt-2 text-sm text-slate-500">{{ stat.subtitle }}</p>
+    <UpcomingDeadlinesSection :tasks="upcomingTasks" />
 
-          <p
-            v-if="stat.change !== undefined && stat.changeLabel"
-            class="mt-1 text-sm font-medium text-green-600"
-          >
-            +{{ stat.change }} {{ stat.changeLabel }}
-          </p>
-        </CardContent>
-      </Card>
-    </div>
-
-    <Card class="mt-6">
-      <CardHeader class="flex justify-between border-b">
-        <CardTitle class="text-lg mb-2">Project Progress</CardTitle>
-        <RouterLink
-          to="/projects"
-          class="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-        >
-          View all <ArrowRight class="inline h-4 w-4" />
-        </RouterLink>
-      </CardHeader>
-
-      <CardContent>
-        <ul>
-          <li
-            v-for="project in projects"
-            :key="project.name"
-            class="border-b border-slate-200 py-5 last:border-b-0"
-          >
-            <div class="flex items-center justify-between gap-4">
-              <h3 class="font-semibold">
-                {{ project.name }}
-              </h3>
-
-              <div class="flex shrink-0 items-center gap-3">
-                <span
-                  :class="[
-                    'rounded-full px-3 py-1 text-sm font-medium',
-                    project.statusTextColor,
-                    project.statusBgColor,
-                  ]"
-                >
-                  {{ project.status }}
-                </span>
-
-                <span class="text-sm font-medium text-slate-600">
-                  {{ getProjectProgress(project) }}%
-                </span>
-              </div>
-            </div>
-
-            <div class="mt-3 h-2 w-full rounded-full bg-slate-100">
-              <div
-                :class="['h-2 rounded-full', project.statusProgressColor]"
-                :style="{ width: `${getProjectProgress(project)}%` }"
-              />
-            </div>
-
-            <div class="mt-3 flex items-center justify-between text-sm text-slate-500">
-              <span> {{ project.completedTasks }}/{{ project.totalTasks }} tasks </span>
-
-              <span v-if="project.dueDate"> Due {{ project.dueDate }} </span>
-            </div>
-          </li>
-        </ul>
-      </CardContent>
-    </Card>
-
-    <Card class="mt-6">
-      <CardHeader class="flex justify-between border-b">
-        <CardTitle class="text-lg mb-2">Upcoming Deadlines</CardTitle>
-        <span class="flex gap-2 items-center text-sm text-slate-500"
-          ><Clock class="h-4 w-4"></Clock>Next 14 days</span
-        >
-      </CardHeader>
-
-      <CardContent>
-        <ul>
-          <li
-            v-for="task in upcomingTasks"
-            :key="task.name"
-            class="border-b border-slate-200 py-5 last:border-b-0"
-          >
-            <div class="flex items-center justify-between gap-4">
-              <div>
-                <h3 class="font-semibold">
-                  {{ task.name }}
-                </h3>
-
-                <p class="mt-1 text-sm text-slate-500">
-                  {{ task.project }}
-                </p>
-              </div>
-
-              <div class="flex shrink-0 items-center gap-3">
-                <span
-                  class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-semibold text-white"
-                >
-                  {{ getInitials(task.assignedTo) }}
-                </span>
-
-                <span class="text-sm font-medium text-slate-600">
-                  {{ task.dueDate }}
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </CardContent>
-    </Card>
-
-    <Card class="mt-6">
-      <CardHeader class="flex justify-between border-b">
-        <CardTitle class="text-lg mb-2">Recent Activity</CardTitle>
-      </CardHeader>
-
-      <CardContent>
-        <ul>
-          <li
-            v-for="activity in recentActivities"
-            :key="`${activity.user}-${activity.target}`"
-            class="border-b border-slate-200 py-5 last:border-b-0"
-          >
-            <div class="flex gap-4">
-              <div>
-                <span
-                  class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600 text-xs font-semibold text-white"
-                >
-                  {{ getInitials(activity.user) }}
-                </span>
-              </div>
-              <div>
-                <h3>
-                  <span class="font-semibold">
-                    {{ activity.user }}
-                  </span>
-
-                  {{ activity.action }} "{{ activity.target }}"
-                </h3>
-
-                <p class="mt-1 text-sm text-slate-500">
-                  {{ activity.createdAt }}
-                </p>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </CardContent>
-    </Card>
+    <RecentActivitySection :activities="recentActivities" />
   </main>
 </template>
