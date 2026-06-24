@@ -1,20 +1,11 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { Activity } from '@/types/dashboard'
+import { getInitials } from '@/utils/getInitials'
 
 defineProps<{
   activities: Activity[]
 }>()
-
-const getInitials = (fullName: string) => {
-  return fullName
-    .trim()
-    .split(' ')
-    .filter(Boolean)
-    .map((name) => name[0])
-    .join('')
-    .toUpperCase()
-}
 </script>
 <template>
   <Card class="mt-6">

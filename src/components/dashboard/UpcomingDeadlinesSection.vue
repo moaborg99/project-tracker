@@ -2,20 +2,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Clock } from '@lucide/vue'
 import type { Task } from '@/types/dashboard'
+import { getInitials } from '@/utils/getInitials'
 
 defineProps<{
   tasks: Task[]
 }>()
-
-const getInitials = (fullName: string) => {
-  return fullName
-    .trim()
-    .split(' ')
-    .filter(Boolean)
-    .map((name) => name[0])
-    .join('')
-    .toUpperCase()
-}
 </script>
 <template>
   <Card class="mt-6">
