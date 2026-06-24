@@ -2,17 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
-
-type Project = {
-  name: string
-  status: 'In Progress' | 'In Review' | 'To Do' | 'Done'
-  statusTextColor: string
-  statusBgColor: string
-  statusProgressColor: string
-  completedTasks: number
-  totalTasks: number
-  dueDate: string
-}
+import type { Project } from '@/types/dashboard'
 
 defineProps<{
   projects: Project[]

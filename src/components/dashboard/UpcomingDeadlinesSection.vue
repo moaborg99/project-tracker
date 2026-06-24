@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Clock } from '@lucide/vue'
-
-type Task = {
-  name: string
-  project: string
-  assignedTo: string
-  dueDate: string
-}
+import type { Task } from '@/types/dashboard'
 
 defineProps<{
   tasks: Task[]

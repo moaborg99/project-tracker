@@ -1,47 +1,10 @@
 <script setup lang="ts">
-import type { Component } from 'vue'
 import { FolderKanban, SquareCheckBig, TrendingUp, Users } from '@lucide/vue'
+import type { Project, Stat, Task, Activity } from '@/types/dashboard'
 import ProjectProgressSection from '@/components/dashboard/ProjectProgressSection.vue'
 import UpcomingDeadlinesSection from '@/components/dashboard/UpcomingDeadlinesSection.vue'
 import RecentActivitySection from '@/components/dashboard/RecentActivitySection.vue'
 import DashboardStats from '@/components/dashboard/DashboardStats.vue'
-
-type Stat = {
-  title: string
-  value: number
-  subtitle: string
-  change?: number
-  changeLabel?: string
-  icon: Component
-  iconColor?: string
-  backgroundColorIcon?: string
-}
-
-type Project = {
-  name: string
-  status: 'In Progress' | 'In Review' | 'To Do' | 'Done'
-  statusTextColor: string
-  statusBgColor: string
-  statusProgressColor: string
-  completedTasks: number
-  totalTasks: number
-  dueDate: string
-}
-
-type Task = {
-  name: string
-  project: string
-  assignedTo: string
-  dueDate: string
-}
-
-type Activity = {
-  user: string
-  action: string
-  target: string
-  createdAt: string
-  type: 'completed' | 'commented' | 'created' | 'updated' | 'joined'
-}
 
 const stats: Stat[] = [
   {

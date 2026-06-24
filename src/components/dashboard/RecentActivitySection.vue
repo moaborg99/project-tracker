@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-
-type Activity = {
-  user: string
-  action: string
-  target: string
-  createdAt: string
-  type: 'completed' | 'commented' | 'created' | 'updated' | 'joined'
-}
+import type { Activity } from '@/types/dashboard'
 
 defineProps<{
   activities: Activity[]

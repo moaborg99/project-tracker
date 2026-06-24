@@ -1,17 +1,6 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import type { Component } from 'vue'
-
-type Stat = {
-  title: string
-  value: number
-  subtitle: string
-  change?: number
-  changeLabel?: string
-  icon: Component
-  iconColor?: string
-  backgroundColorIcon?: string
-}
+import type { Stat } from '@/types/dashboard'
 
 defineProps<{
   stats: Stat[]
