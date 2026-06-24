@@ -1,14 +1,14 @@
 import type { Component } from 'vue'
 
+export type StatTitle = 'Total Projects' | 'Active Tasks' | 'Completed' | 'Team Members'
+
 export type Stat = {
-  title: string
+  title: StatTitle
   value: number
   subtitle: string
   change?: number
   changeLabel?: string
   icon: Component
-  iconColor?: string
-  backgroundColorIcon?: string
 }
 
 export type ProjectStatus = 'In Progress' | 'In Review' | 'To Do' | 'Done'

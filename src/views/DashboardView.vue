@@ -10,8 +10,6 @@ const stats: Stat[] = [
   {
     title: 'Total Projects',
     icon: FolderKanban,
-    iconColor: 'text-indigo-600',
-    backgroundColorIcon: 'bg-indigo-50',
     value: 6,
     subtitle: '3 active this month',
     change: 2,
@@ -22,8 +20,6 @@ const stats: Stat[] = [
     value: 11,
     subtitle: '8 due this week',
     icon: SquareCheckBig,
-    iconColor: 'text-blue-600',
-    backgroundColorIcon: 'bg-blue-50',
   },
   {
     title: 'Completed',
@@ -32,16 +28,12 @@ const stats: Stat[] = [
     change: 8,
     changeLabel: 'from last month',
     icon: TrendingUp,
-    iconColor: 'text-emerald-600',
-    backgroundColorIcon: 'bg-emerald-50',
   },
   {
     title: 'Team Members',
     value: 6,
     subtitle: 'Online now',
     icon: Users,
-    iconColor: 'text-violet-600',
-    backgroundColorIcon: 'bg-violet-50',
   },
 ]
 
