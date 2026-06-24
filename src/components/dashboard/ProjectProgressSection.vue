@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
-import type { Project } from '@/types/dashboard'
+import type { Project, ProjectStatus } from '@/types/dashboard'
 
 defineProps<{
   projects: Project[]
@@ -14,6 +14,36 @@ const getProjectProgress = (project: Project) => {
   }
 
   return Math.round((project.completedTasks / project.totalTasks) * 100)
+}
+
+const projectStatusConfig: Record<
+  ProjectStatus,
+  {
+    textColor: string
+    bgColor: string
+    progressColor: string
+  }
+> = {
+  'In Progress': {
+    textColor: 'text-blue-600',
+    bgColor: 'bg-blue-50',
+    progressColor: 'bg-indigo-600',
+  },
+  'In Review': {
+    textColor: 'text-yellow-600',
+    bgColor: 'bg-yellow-50',
+    progressColor: 'bg-yellow-600',
+  },
+  'To Do': {
+    textColor: 'text-gray-600',
+    bgColor: 'bg-gray-50',
+    progressColor: 'bg-gray-600',
+  },
+  Done: {
+    textColor: 'text-green-600',
+    bgColor: 'bg-green-50',
+    progressColor: 'bg-green-600',
+  },
 }
 </script>
 
@@ -42,8 +72,8 @@ const getProjectProgress = (project: Project) => {
               <span
                 :class="[
                   'rounded-full px-3 py-1 text-sm font-medium',
-                  project.statusTextColor,
-                  project.statusBgColor,
+                  projectStatusConfig[project.status].textColor,
+                  projectStatusConfig[project.status].bgColor,
                 ]"
               >
                 {{ project.status }}
@@ -57,7 +87,7 @@ const getProjectProgress = (project: Project) => {
 
           <div class="mt-3 h-2 w-full rounded-full bg-slate-100">
             <div
-              :class="['h-2 rounded-full', project.statusProgressColor]"
+              :class="['h-2 rounded-full', projectStatusConfig[project.status].progressColor]"
               :style="{ width: `${getProjectProgress(project)}%` }"
             />
           </div>

@@ -11,12 +11,11 @@ export type Stat = {
   backgroundColorIcon?: string
 }
 
+export type ProjectStatus = 'In Progress' | 'In Review' | 'To Do' | 'Done'
+
 export type Project = {
   name: string
-  status: 'In Progress' | 'In Review' | 'To Do' | 'Done'
-  statusTextColor: string
-  statusBgColor: string
-  statusProgressColor: string
+  status: ProjectStatus
   completedTasks: number
   totalTasks: number
   dueDate: string
