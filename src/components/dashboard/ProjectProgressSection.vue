@@ -2,7 +2,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
-import type { Project, ProjectStatus } from '@/types/dashboard'
+import type { Project } from '@/types/dashboard'
+import { projectStatusConfig } from '@/config/projectStatusConfig'
+import ProjectStatusBadge from '@/components/project/ProjectStatusBadge.vue'
 
 defineProps<{
   projects: Project[]
@@ -14,36 +16,6 @@ const getProjectProgress = (project: Project) => {
   }
 
   return Math.round((project.completedTasks / project.totalTasks) * 100)
-}
-
-const projectStatusConfig: Record<
-  ProjectStatus,
-  {
-    textColor: string
-    bgColor: string
-    progressColor: string
-  }
-> = {
-  'In Progress': {
-    textColor: 'text-blue-600',
-    bgColor: 'bg-blue-50',
-    progressColor: 'bg-indigo-600',
-  },
-  'In Review': {
-    textColor: 'text-yellow-600',
-    bgColor: 'bg-yellow-50',
-    progressColor: 'bg-yellow-600',
-  },
-  'To Do': {
-    textColor: 'text-gray-600',
-    bgColor: 'bg-gray-50',
-    progressColor: 'bg-gray-600',
-  },
-  Done: {
-    textColor: 'text-green-600',
-    bgColor: 'bg-green-50',
-    progressColor: 'bg-green-600',
-  },
 }
 </script>
 
@@ -69,16 +41,7 @@ const projectStatusConfig: Record<
             </h3>
 
             <div class="flex shrink-0 items-center gap-3">
-              <span
-                :class="[
-                  'rounded-full px-3 py-1 text-sm font-medium',
-                  projectStatusConfig[project.status].textColor,
-                  projectStatusConfig[project.status].bgColor,
-                ]"
-              >
-                {{ project.status }}
-              </span>
-
+              <ProjectStatusBadge :status="project.status" />
               <span class="text-sm font-medium text-slate-600">
                 {{ getProjectProgress(project) }}%
               </span>
