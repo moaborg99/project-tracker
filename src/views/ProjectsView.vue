@@ -5,8 +5,33 @@ import ProjectStatusBadge from '@/components/project/ProjectStatusBadge.vue'
 import type { Project } from '@/types/dashboard'
 import { projectStatusConfig } from '@/config/projectStatusConfig'
 import { getInitials } from '@/utils/getInitials'
+import { computed, ref } from 'vue'
+import type { ProjectStatus } from '@/types/dashboard'
 
 const projects = getProjects()
+
+const selectedStatus = ref<ProjectStatus | 'All'>('All')
+const filteredProjects = computed(() => {
+  if (selectedStatus.value === 'All') {
+    return projects
+  }
+
+  return projects.filter((project) => project.status === selectedStatus.value)
+})
+
+const filteredProjectCount = computed(() => filteredProjects.value.length)
+
+const activeProjectCount = computed(() => {
+  return filteredProjects.value.filter((project) => project.status === 'In Progress').length
+})
+
+const statusFilters: Array<ProjectStatus | 'All'> = [
+  'All',
+  'In Progress',
+  'In Review',
+  'To Do',
+  'Done',
+]
 
 const getProjectProgress = (project: Project) => {
   if (project.totalTasks === 0) {
@@ -19,10 +44,37 @@ const getProjectProgress = (project: Project) => {
 
 <template>
   <main>
+    <div class="mb-6 flex items-center justify-between">
+      <div class="mb-6">
+        <h1 class="text-3xl font-bold text-slate-900">Projects</h1>
+
+        <p class="mt-2 text-slate-500">
+          {{ filteredProjectCount }} projects · {{ activeProjectCount }} active
+        </p>
+      </div>
+
+      <!-- Här kommer search och actions senare -->
+    </div>
+    <div class="mb-6 flex flex-wrap gap-2">
+      <button
+        v-for="status in statusFilters"
+        :key="status"
+        type="button"
+        :class="[
+          'rounded-full px-4 py-2 text-sm font-medium transition-colors',
+          selectedStatus === status
+            ? 'bg-black text-white'
+            : 'bg-white text-slate-600 border hover:bg-slate-200',
+        ]"
+        @click="selectedStatus = status"
+      >
+        {{ status }}
+      </button>
+    </div>
     <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       <Card
-        v-for="project in projects"
-        :key="project.name"
+        v-for="project in filteredProjects"
+        :key="project.id"
         :class="[
           'border-t-4 cursor-pointer transition-all duration-200',
           'hover:-translate-y-0.5 hover:shadow-lg',
