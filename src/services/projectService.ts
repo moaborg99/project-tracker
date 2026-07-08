@@ -14,6 +14,7 @@ export const getProjects = (): Project[] => {
       completedTasks: 23,
       totalTasks: 34,
       dueDate: '2026-09-23',
+      startDate: '2026-06-01',
     },
     {
       id: 2,
@@ -27,6 +28,7 @@ export const getProjects = (): Project[] => {
       completedTasks: 18,
       totalTasks: 52,
       dueDate: '2026-09-15',
+      startDate: '2026-06-12',
     },
     {
       id: 3,
@@ -40,6 +42,7 @@ export const getProjects = (): Project[] => {
       completedTasks: 0,
       totalTasks: 21,
       dueDate: '2026-10-01',
+      startDate: '2026-07-01',
     },
     {
       id: 4,
@@ -53,6 +56,11 @@ export const getProjects = (): Project[] => {
       completedTasks: 28,
       totalTasks: 28,
       dueDate: '2026-05-30',
+      startDate: '2026-03-15',
     },
   ]
+}
+
+export const getProjectById = (id: number): Project | undefined => {
+  return getProjects().find((project) => project.id === id)
 }

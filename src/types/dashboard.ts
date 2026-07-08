@@ -24,6 +24,7 @@ export type Project = {
   completedTasks: number
   totalTasks: number
   dueDate: string
+  startDate: string
 }
 
 export type Task = {
