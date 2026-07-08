@@ -5,7 +5,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import ProjectStatusBadge from '@/components/project/ProjectStatusBadge.vue'
-import { getProjectById, getProjectStats } from '@/services/projectService'
+import { getProjectById, getProjectStats, getProjectProgress } from '@/services/projectService'
 import { projectStatusConfig } from '@/config/projectStatusConfig'
 import { Plus, Ellipsis, Calendar } from '@lucide/vue'
 
@@ -19,6 +19,12 @@ const projectStats = computed(() => {
   if (!project.value) return []
 
   return getProjectStats(project.value)
+})
+
+const projectProgress = computed(() => {
+  if (!project.value) return 0
+
+  return getProjectProgress(project.value)
 })
 
 const projectBorderColor = computed(() => {
@@ -98,5 +104,27 @@ const projectBorderColor = computed(() => {
         :icon="stat.icon"
       />
     </div>
+
+    <Card class="mt-6">
+      <CardHeader>
+        <CardTitle>Project Progress</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <div class="mb-2 flex items-center justify-between text-sm">
+          <span class="text-muted-foreground">
+            {{ project?.completedTasks }} of {{ project?.totalTasks }} tasks completed
+          </span>
+
+          <span class="font-medium"> {{ projectProgress }}% </span>
+        </div>
+
+        <div class="h-2 rounded-full bg-muted">
+          <div class="h-2 rounded-full bg-primary" :style="{ width: `${projectProgress}%` }" />
+        </div>
+
+        <!-- TODO: Add task status summary when Task model is implemented -->
+      </CardContent>
+    </Card>
   </main>
 </template>

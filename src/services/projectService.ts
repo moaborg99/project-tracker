@@ -90,3 +90,9 @@ export const getProjectStats = (project: Project): ProjectStat[] => {
     },
   ]
 }
+
+export const getProjectProgress = (project: Project): number => {
+  if (project.totalTasks === 0) return 0
+
+  return Math.round((project.completedTasks / project.totalTasks) * 100)
+}
