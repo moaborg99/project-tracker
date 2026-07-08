@@ -2,11 +2,10 @@
 import { getProjects } from '@/services/projectService'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import ProjectStatusBadge from '@/components/project/ProjectStatusBadge.vue'
-import type { Project } from '@/types/dashboard'
+import type { Project, ProjectStatus } from '@/types/project'
 import { projectStatusConfig } from '@/config/projectStatusConfig'
 import { getInitials } from '@/utils/getInitials'
 import { computed, ref } from 'vue'
-import type { ProjectStatus } from '@/types/dashboard'
 import { RouterLink } from 'vue-router'
 
 const projects = getProjects()

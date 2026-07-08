@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProjectStatus } from '@/types/dashboard'
+import type { ProjectStatus } from '@/types/project'
 import { projectStatusConfig } from '@/config/projectStatusConfig'
 
 defineProps<{

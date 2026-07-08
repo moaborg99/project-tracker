@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
-import type { Project } from '@/types/dashboard'
+import type { Project } from '@/types/project'
 import { projectStatusConfig } from '@/config/projectStatusConfig'
 import ProjectStatusBadge from '@/components/project/ProjectStatusBadge.vue'
 

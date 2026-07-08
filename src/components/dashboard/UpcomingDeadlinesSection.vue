@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Clock } from '@lucide/vue'
-import type { Task } from '@/types/dashboard'
+import type { Task } from '@/types/task'
 import { getInitials } from '@/utils/getInitials'
 
 defineProps<{

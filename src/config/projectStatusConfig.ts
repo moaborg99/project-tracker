@@ -1,4 +1,4 @@
-import type { ProjectStatus } from '@/types/dashboard'
+import type { ProjectStatus } from '@/types/project'
 
 export const projectStatusConfig: Record<
   ProjectStatus,
@@ -19,7 +19,7 @@ export const projectStatusConfig: Record<
     textColor: 'text-yellow-600',
     bgColor: 'bg-yellow-50',
     progressColor: 'bg-yellow-600',
-    borderColor: 'border-t-yellow-600'
+    borderColor: 'border-t-yellow-600',
   },
   'To Do': {
     textColor: 'text-gray-600',
@@ -31,6 +31,6 @@ export const projectStatusConfig: Record<
     textColor: 'text-green-600',
     bgColor: 'bg-green-50',
     progressColor: 'bg-green-600',
-    borderColor: 'border-t-green-600'
+    borderColor: 'border-t-green-600',
   },
 }

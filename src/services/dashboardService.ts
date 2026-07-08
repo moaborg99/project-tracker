@@ -1,4 +1,6 @@
-import type { Stat, Task, Activity } from '@/types/dashboard'
+import type { Stat } from '@/types/dashboard'
+import type { Task } from '@/types/task'
+import type { Activity } from '@/types/activity'
 import { FolderKanban, SquareCheckBig, TrendingUp, Users } from '@lucide/vue'
 import { getProjects } from '@/services/projectService'
 
@@ -72,13 +74,12 @@ export const getDashboardOverview = () => {
     },
   ]
 
+  const projects = getProjects()
 
-const projects = getProjects()
-
-return {
-  stats,
-  projects,
-  upcomingTasks,
-  recentActivities,
-}
+  return {
+    stats,
+    projects,
+    upcomingTasks,
+    recentActivities,
+  }
 }

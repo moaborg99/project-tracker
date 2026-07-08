@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import type { Activity } from '@/types/dashboard'
+import type { Activity } from '@/types/activity'
 import { getInitials } from '@/utils/getInitials'
 
 defineProps<{
