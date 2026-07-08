@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import ProjectStatCard from '@/components/project/ProjectStatCard.vue'
 import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import ProjectStatusBadge from '@/components/project/ProjectStatusBadge.vue'
-import { getProjectById } from '@/services/projectService'
+import { getProjectById, getProjectStats } from '@/services/projectService'
 import { projectStatusConfig } from '@/config/projectStatusConfig'
 import { Plus, Ellipsis, Calendar } from '@lucide/vue'
 
@@ -13,6 +14,18 @@ const route = useRoute()
 const projectId = computed(() => Number(route.params.id))
 
 const project = computed(() => getProjectById(projectId.value))
+
+const projectStats = computed(() => {
+  if (!project.value) return []
+
+  return getProjectStats(project.value)
+})
+
+const projectBorderColor = computed(() => {
+  if (!project.value) return ''
+
+  return projectStatusConfig[project.value.status].borderColor
+})
 </script>
 
 <template>
@@ -21,10 +34,7 @@ const project = computed(() => getProjectById(projectId.value))
       ← Back to Projects
     </RouterLink>
 
-    <Card
-      v-if="project"
-      :class="['mt-6 border-t-4', projectStatusConfig[project.status].borderColor]"
-    >
+    <Card v-if="project" :class="['mt-6 border-t-4', projectBorderColor]">
       <CardHeader class="flex flex-row items-start justify-between px-6 pt-2 pb-4">
         <div>
           <div class="flex items-center gap-3">
@@ -78,5 +88,15 @@ const project = computed(() => getProjectById(projectId.value))
     </Card>
 
     <div v-else>Project not found</div>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 pt-6">
+      <ProjectStatCard
+        v-for="stat in projectStats"
+        :key="stat.title"
+        :title="stat.title"
+        :value="stat.value"
+        :icon="stat.icon"
+      />
+    </div>
   </main>
 </template>

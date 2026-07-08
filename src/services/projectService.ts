@@ -1,4 +1,5 @@
-import type { Project } from '@/types/dashboard'
+import type { Project, ProjectStat } from '@/types/project'
+import { CheckSquare, Users, FolderKanban, TrendingUp } from '@lucide/vue'
 
 export const getProjects = (): Project[] => {
   return [
@@ -63,4 +64,29 @@ export const getProjects = (): Project[] => {
 
 export const getProjectById = (id: number): Project | undefined => {
   return getProjects().find((project) => project.id === id)
+}
+
+export const getProjectStats = (project: Project): ProjectStat[] => {
+  return [
+    {
+      title: 'Total Tasks',
+      value: project.totalTasks,
+      icon: CheckSquare,
+    },
+    {
+      title: 'Completed',
+      value: project.completedTasks,
+      icon: TrendingUp,
+    },
+    {
+      title: 'Team Members',
+      value: project.members.length,
+      icon: Users,
+    },
+    {
+      title: 'Remaining',
+      value: project.totalTasks - project.completedTasks,
+      icon: FolderKanban,
+    },
+  ]
 }
