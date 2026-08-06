@@ -1,6 +1,8 @@
 import type { Component } from 'vue'
 
-export type ProjectStatus = 'In Progress' | 'In Review' | 'To Do' | 'Done'
+import type { Status } from './status'
+
+export type ProjectStatus = Exclude<Status, 'Backlog'>
 
 export type Project = {
   id: number

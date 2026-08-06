@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Clock } from '@lucide/vue'
 import type { Task } from '@/types/task'
-import { getInitials } from '@/utils/getInitials'
+import AppAvatar from '@/components/avatars/AppAvatar.vue'
 
 defineProps<{
   tasks: Task[]
@@ -21,26 +21,22 @@ defineProps<{
       <ul>
         <li
           v-for="task in tasks"
-          :key="task.name"
+          :key="task.title"
           class="border-b border-slate-200 py-5 last:border-b-0"
         >
           <div class="flex items-center justify-between gap-4">
             <div>
               <h3 class="font-semibold">
-                {{ task.name }}
+                {{ task.title }}
               </h3>
 
               <p class="mt-1 text-sm text-slate-500">
-                {{ task.project }}
+                {{ task.projectId }} - {{ task.type }}
               </p>
             </div>
 
             <div class="flex shrink-0 items-center gap-3">
-              <span
-                class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-semibold text-white"
-              >
-                {{ getInitials(task.assignedTo) }}
-              </span>
+              <AppAvatar :name="task.assignedTo" size="sm" />
 
               <span class="text-sm font-medium text-slate-600">
                 {{ task.dueDate }}

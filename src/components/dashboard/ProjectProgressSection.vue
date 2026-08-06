@@ -3,8 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
 import type { Project } from '@/types/project'
-import { projectStatusConfig } from '@/config/projectStatusConfig'
-import ProjectStatusBadge from '@/components/project/ProjectStatusBadge.vue'
+import { statusConfig } from '@/config/statusConfig'
+import ProjectStatusBadge from '@/components/badges/StatusBadge.vue'
 
 defineProps<{
   projects: Project[]
@@ -50,7 +50,7 @@ const getProjectProgress = (project: Project) => {
 
           <div class="mt-3 h-2 w-full rounded-full bg-slate-100">
             <div
-              :class="['h-2 rounded-full', projectStatusConfig[project.status].progressColor]"
+              :class="['h-2 rounded-full', statusConfig[project.status].progressColor]"
               :style="{ width: `${getProjectProgress(project)}%` }"
             />
           </div>

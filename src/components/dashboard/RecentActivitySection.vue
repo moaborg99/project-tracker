@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import AppAvatar from '@/components/avatars/AppAvatar.vue'
 import type { Activity } from '@/types/activity'
-import { getInitials } from '@/utils/getInitials'
 
 defineProps<{
   activities: Activity[]
@@ -21,13 +21,7 @@ defineProps<{
           class="border-b border-slate-200 py-5 last:border-b-0"
         >
           <div class="flex gap-4">
-            <div>
-              <span
-                class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600 text-xs font-semibold text-white"
-              >
-                {{ getInitials(activity.user) }}
-              </span>
-            </div>
+            <AppAvatar :name="activity.user" />
             <div>
               <h3>
                 <span class="font-semibold">

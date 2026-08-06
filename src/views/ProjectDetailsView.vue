@@ -4,10 +4,12 @@ import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import ProjectStatusBadge from '@/components/project/ProjectStatusBadge.vue'
+import ProjectStatusBadge from '@/components/badges/StatusBadge.vue'
 import { getProjectById, getProjectStats, getProjectProgress } from '@/services/projectService'
-import { projectStatusConfig } from '@/config/projectStatusConfig'
+import { statusConfig } from '@/config/statusConfig'
 import { Plus, Ellipsis, Calendar } from '@lucide/vue'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import ProjectTasksTab from '@/components/project/ProjectTasksTab.vue'
 
 const route = useRoute()
 
@@ -30,7 +32,7 @@ const projectProgress = computed(() => {
 const projectBorderColor = computed(() => {
   if (!project.value) return ''
 
-  return projectStatusConfig[project.value.status].borderColor
+  return statusConfig[project.value.status].borderColor
 })
 </script>
 
@@ -126,5 +128,22 @@ const projectBorderColor = computed(() => {
         <!-- TODO: Add task status summary when Task model is implemented -->
       </CardContent>
     </Card>
+    <Tabs default-value="tasks" class="mt-6">
+      <TabsList>
+        <TabsTrigger value="tasks"> Tasks </TabsTrigger>
+
+        <TabsTrigger value="team"> Team </TabsTrigger>
+
+        <TabsTrigger value="activity"> Activity </TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="tasks">
+        <ProjectTasksTab :project-id="projectId" />
+      </TabsContent>
+
+      <TabsContent value="team"> Team content </TabsContent>
+
+      <TabsContent value="activity"> Activity content </TabsContent>
+    </Tabs>
   </main>
 </template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { getProjects } from '@/services/projectService'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import ProjectStatusBadge from '@/components/project/ProjectStatusBadge.vue'
+import ProjectStatusBadge from '@/components/badges/StatusBadge.vue'
 import type { Project, ProjectStatus } from '@/types/project'
-import { projectStatusConfig } from '@/config/projectStatusConfig'
+import { statusConfig } from '@/config/statusConfig'
 import { getInitials } from '@/utils/getInitials'
 import { computed, ref } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -82,7 +82,7 @@ const getProjectProgress = (project: Project) => {
           :class="[
             'h-full border-t-4 cursor-pointer transition-all duration-200',
             'hover:-translate-y-0.5 hover:shadow-lg',
-            projectStatusConfig[project.status].borderColor,
+            statusConfig[project.status].borderColor,
           ]"
         >
           <CardHeader class="px-6 mt-2">
@@ -110,7 +110,7 @@ const getProjectProgress = (project: Project) => {
 
               <div class="h-2 w-full rounded-full bg-slate-100">
                 <div
-                  :class="['h-2 rounded-full', projectStatusConfig[project.status].progressColor]"
+                  :class="['h-2 rounded-full', statusConfig[project.status].progressColor]"
                   :style="{ width: `${getProjectProgress(project)}%` }"
                 />
               </div>
