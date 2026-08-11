@@ -16,7 +16,7 @@ const route = useRoute()
 
 const projectId = computed(() => Number(route.params.id))
 
-const project = ref<Project | undefined>(undefined)
+const project = ref<Project | null>(null)
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 

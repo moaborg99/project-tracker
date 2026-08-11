@@ -11,10 +11,14 @@ export const getProjects = async (): Promise<Project[]> => {
   return response.json()
 }
 
-export const getProjectById = async (id: number): Promise<Project | undefined> => {
-  const projects = await getProjects()
+export const getProjectById = async (id: number): Promise<Project> => {
+  const response = await fetch(`http://localhost:8080/api/projects/${id}`)
 
-  return projects.find((project) => project.id === id)
+  if (!response.ok) {
+    throw new Error(`Failed to fetch project with id ${id}`)
+  }
+
+  return response.json()
 }
 
 export const getProjectStats = (project: Project): ProjectStat[] => {
