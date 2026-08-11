@@ -4,7 +4,7 @@ import type { Activity } from '@/types/activity'
 import { FolderKanban, SquareCheckBig, TrendingUp, Users } from '@lucide/vue'
 import { getProjects } from '@/services/projectService'
 
-export const getDashboardOverview = () => {
+export const getDashboardOverview = async () => {
   const stats: Stat[] = [
     {
       title: 'Total Projects',
@@ -38,20 +38,32 @@ export const getDashboardOverview = () => {
 
   const upcomingTasks: Task[] = [
     {
-      name: 'Design Landing Page',
-      project: 'Project Alpha',
+      id: 1,
+      projectId: 1,
+      title: 'Design Landing Page',
+      description: 'Create the landing page design.',
+      type: 'Design',
+      status: 'In Progress',
       assignedTo: 'Alice Cooper',
       dueDate: '2026-09-20',
     },
     {
-      name: 'Set Up Database',
-      project: 'Project Beta',
+      id: 2,
+      projectId: 1,
+      title: 'Set Up Database',
+      description: 'Set up the initial project database.',
+      type: 'Backend',
+      status: 'To Do',
       assignedTo: 'Bob Marley',
       dueDate: '2026-09-18',
     },
     {
-      name: 'Write API Documentation',
-      project: 'Project Gamma',
+      id: 3,
+      projectId: 1,
+      title: 'Write API Documentation',
+      description: 'Document the current project API.',
+      type: 'Backend',
+      status: 'In Review',
       assignedTo: 'Charlie Chaplin',
       dueDate: '2026-09-25',
     },
@@ -74,7 +86,7 @@ export const getDashboardOverview = () => {
     },
   ]
 
-  const projects = getProjects()
+  const projects = await getProjects()
 
   return {
     stats,

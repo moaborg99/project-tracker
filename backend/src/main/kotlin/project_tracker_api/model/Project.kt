@@ -1,10 +1,7 @@
 package project_tracker_api.model
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
+import java.time.LocalDate
 
 @Entity
 @Table(name = "projects")
@@ -14,5 +11,19 @@ data class Project(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    val name: String
+    val name: String,
+
+    val description: String,
+
+    val status: String,
+
+    val priority: String,
+
+    val completedTasks: Int,
+
+    val totalTasks: Int,
+
+    val dueDate: LocalDate,
+
+    val startDate: LocalDate
 )

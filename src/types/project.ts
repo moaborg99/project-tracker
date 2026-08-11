@@ -10,8 +10,8 @@ export type Project = {
   description: string
   status: ProjectStatus
   priority: 'Low' | 'Medium' | 'High'
-  tags: string[]
-  members: string[]
+  tags?: string[]
+  members?: string[]
   completedTasks: number
   totalTasks: number
   dueDate: string
