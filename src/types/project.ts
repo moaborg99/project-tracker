@@ -23,3 +23,5 @@ export type ProjectStat = {
   value: number
   icon: Component
 }
+
+export type CreateProjectInput = Omit<Project, 'id' | 'tags' | 'members'>

@@ -15,18 +15,17 @@ const router = createRouter({
     {
       path: '/projects',
       name: 'projects',
-      component: () => import('../views/ProjectsView.vue'),
-      meta: {
-        title: 'Projects',
-      },
+      component: () => import('@/views/ProjectsView.vue'),
+    },
+    {
+      path: '/projects/new',
+      name: 'new-project',
+      component: () => import('@/views/NewProjectView.vue'),
     },
     {
       path: '/projects/:id',
       name: 'project-details',
-      component: () => import('../views/ProjectDetailsView.vue'),
-      meta: {
-        title: 'Project Details',
-      },
+      component: () => import('@/views/ProjectDetailsView.vue'),
     },
     {
       path: '/tasks',

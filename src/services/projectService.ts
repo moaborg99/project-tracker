@@ -1,4 +1,4 @@
-import type { Project, ProjectStat } from '@/types/project'
+import type { CreateProjectInput, Project, ProjectStat } from '@/types/project'
 import { CheckSquare, Users, FolderKanban, TrendingUp } from '@lucide/vue'
 
 export const getProjects = async (): Promise<Project[]> => {
@@ -16,6 +16,22 @@ export const getProjectById = async (id: number): Promise<Project> => {
 
   if (!response.ok) {
     throw new Error(`Failed to fetch project with id ${id}`)
+  }
+
+  return response.json()
+}
+
+export const createProject = async (project: CreateProjectInput): Promise<Project> => {
+  const response = await fetch('http://localhost:8080/api/projects', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(project),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to create project')
   }
 
   return response.json()

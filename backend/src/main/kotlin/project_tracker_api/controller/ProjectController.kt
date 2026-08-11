@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.PathVariable
+
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+
 import project_tracker_api.model.Project
 import project_tracker_api.service.ProjectService
 
@@ -24,4 +28,10 @@ class ProjectController(
     fun getProjectById(@PathVariable id: Long): Project {
         return projectService.getProjectById(id)
     }
+
+    @PostMapping
+    fun createProject(@RequestBody project: Project): Project {
+        return projectService.createProject(project)
+    }
+
 }

@@ -8,6 +8,8 @@ import ProjectStatusBadge from '@/components/badges/StatusBadge.vue'
 import type { Project, ProjectStatus } from '@/types/project'
 import { statusConfig } from '@/config/statusConfig'
 import { getInitials } from '@/utils/getInitials'
+import { Plus } from '@lucide/vue'
+import { Button } from '@/components/ui/button'
 
 const projects = ref<Project[]>([])
 const isLoading = ref(true)
@@ -72,8 +74,12 @@ const getProjectProgress = (project: Project) => {
             {{ filteredProjectCount }} projects · {{ activeProjectCount }} active
           </p>
         </div>
-
-        <!-- Här kommer search och actions senare -->
+        <RouterLink to="/projects/new">
+          <Button>
+            New Project
+            <Plus class="h-4 w-4" />
+          </Button>
+        </RouterLink>
       </div>
       <div class="mb-6 flex flex-wrap gap-2">
         <button
