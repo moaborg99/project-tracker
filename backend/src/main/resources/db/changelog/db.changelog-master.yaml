@@ -54,3 +54,12 @@ databaseChangeLog:
               - column:
                   name: start_date
                   type: DATE
+  - changeSet:
+      id: 003-seed-projects
+      author: project-tracker
+      context: dev
+      changes:
+        - loadData:
+            file: db/seed/projects.csv
+            tableName: projects
+            separator: ','
