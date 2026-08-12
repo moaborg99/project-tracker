@@ -1,19 +1,41 @@
 <script setup lang="ts">
 import ProjectStatCard from '@/components/project/ProjectStatCard.vue'
 import { computed, onMounted, ref } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import ProjectStatusBadge from '@/components/badges/StatusBadge.vue'
-import { getProjectById, getProjectStats, getProjectProgress } from '@/services/projectService'
+import {
+  getProjectById,
+  getProjectStats,
+  getProjectProgress,
+  deleteProject,
+} from '@/services/projectService'
 import { statusConfig } from '@/config/statusConfig'
 import { Plus, Ellipsis, Calendar } from '@lucide/vue'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import ProjectTasksTab from '@/components/project/ProjectTasksTab.vue'
 import type { Project } from '@/types/project'
 
 const route = useRoute()
-
+const router = useRouter()
 const projectId = computed(() => Number(route.params.id))
 
 const project = ref<Project | null>(null)
@@ -29,6 +51,12 @@ onMounted(async () => {
     isLoading.value = false
   }
 })
+
+const handleDelete = async () => {
+  await deleteProject(projectId.value)
+
+  await router.push('/projects')
+}
 
 const projectStats = computed(() => {
   if (!project.value) return []
@@ -81,9 +109,37 @@ const projectBorderColor = computed(() => {
               <Plus class="h-4 w-4" />
               Add Task
             </Button>
-            <button type="button" class="text-slate-400 hover:text-slate-600">
-              <Ellipsis class="h-5 w-5" />
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger as-child>
+                <button type="button" class="text-slate-400 hover:text-slate-600">
+                  <Ellipsis class="h-5 w-5" />
+                </button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end">
+                <AlertDialog>
+                  <AlertDialogTrigger as-child>
+                    <DropdownMenuItem @select.prevent> Delete Project </DropdownMenuItem>
+                  </AlertDialogTrigger>
+
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Delete project?</AlertDialogTitle>
+
+                      <AlertDialogDescription>
+                        This action cannot be undone. The project will be permanently deleted.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+
+                      <AlertDialogAction @click="handleDelete"> Delete Project </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </CardHeader>
 

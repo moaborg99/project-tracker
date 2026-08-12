@@ -37,6 +37,16 @@ export const createProject = async (project: CreateProjectInput): Promise<Projec
   return response.json()
 }
 
+export const deleteProject = async (id: number) => {
+  const response = await fetch(`http://localhost:8080/api/projects/${id}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete project with id ${id}`)
+  }
+}
+
 export const getProjectStats = (project: Project): ProjectStat[] => {
   return [
     {

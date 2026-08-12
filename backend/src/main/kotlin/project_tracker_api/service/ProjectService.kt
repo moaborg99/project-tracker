@@ -28,4 +28,8 @@ class ProjectService(
     fun createProject(project: Project): Project {
         return projectRepository.save(project)
     }
+    
+    fun deleteProject(id: Long) {
+    projectRepository.deleteById(id)
+}
 }
