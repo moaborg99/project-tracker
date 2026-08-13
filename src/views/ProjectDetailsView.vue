@@ -117,6 +117,9 @@ const projectBorderColor = computed(() => {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="end">
+                <DropdownMenuItem as-child>
+                  <RouterLink :to="`/projects/${projectId}/edit`"> Edit Project </RouterLink>
+                </DropdownMenuItem>
                 <AlertDialog>
                   <AlertDialogTrigger as-child>
                     <DropdownMenuItem @select.prevent> Delete Project </DropdownMenuItem>

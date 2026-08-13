@@ -4,11 +4,11 @@ import { RouterLink, useRouter } from 'vue-router'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { createProject } from '@/services/projectService'
-import type { CreateProjectInput } from '@/types/project'
+import type { ProjectInput } from '@/types/project'
 
 const router = useRouter()
 
-const form = ref<CreateProjectInput>({
+const form = ref<ProjectInput>({
   name: '',
   description: '',
   status: 'To Do',

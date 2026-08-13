@@ -28,6 +28,14 @@ const router = createRouter({
       },
       component: () => import('@/views/NewProjectView.vue'),
     },
+        {
+      path: '/projects/:id/edit',
+      name: 'edit-project',
+      meta: {
+        title: 'Edit Project',
+      },
+      component: () => import('@/views/EditProjectView.vue'),
+    },
     {
       path: '/projects/:id',
       name: 'project-details',

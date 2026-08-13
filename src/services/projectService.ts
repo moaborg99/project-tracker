@@ -1,4 +1,4 @@
-import type { CreateProjectInput, Project, ProjectStat } from '@/types/project'
+import type { ProjectInput, Project, ProjectStat } from '@/types/project'
 import { CheckSquare, Users, FolderKanban, TrendingUp } from '@lucide/vue'
 
 export const getProjects = async (): Promise<Project[]> => {
@@ -21,7 +21,7 @@ export const getProjectById = async (id: number): Promise<Project> => {
   return response.json()
 }
 
-export const createProject = async (project: CreateProjectInput): Promise<Project> => {
+export const createProject = async (project: ProjectInput): Promise<Project> => {
   const response = await fetch('http://localhost:8080/api/projects', {
     method: 'POST',
     headers: {
@@ -45,6 +45,22 @@ export const deleteProject = async (id: number) => {
   if (!response.ok) {
     throw new Error(`Failed to delete project with id ${id}`)
   }
+}
+
+export const updateProject = async (id: number, updatedProject: ProjectInput): Promise<Project> => {
+  const response = await fetch(`http://localhost:8080/api/projects/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedProject),
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to update project with id ${id}`)
+  }
+
+  return response.json()
 }
 
 export const getProjectStats = (project: Project): ProjectStat[] => {

@@ -28,8 +28,29 @@ class ProjectService(
     fun createProject(project: Project): Project {
         return projectRepository.save(project)
     }
-    
+
     fun deleteProject(id: Long) {
-    projectRepository.deleteById(id)
-}
+        projectRepository.deleteById(id)
+    }
+
+    fun updateProject(id: Long, updatedProject: Project): Project {
+        val existingProject = projectRepository.findById(id)
+            .orElseThrow {
+                ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Project with id $id not found"
+                )
+            }
+
+        existingProject.name = updatedProject.name
+        existingProject.description = updatedProject.description
+        existingProject.status = updatedProject.status
+        existingProject.priority = updatedProject.priority
+        existingProject.completedTasks = updatedProject.completedTasks
+        existingProject.totalTasks = updatedProject.totalTasks
+        existingProject.dueDate = updatedProject.dueDate
+        existingProject.startDate = updatedProject.startDate
+
+        return projectRepository.save(existingProject)
+    }
 }

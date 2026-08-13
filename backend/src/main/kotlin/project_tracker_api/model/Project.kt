@@ -11,19 +11,19 @@ data class Project(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    val name: String,
+    var name: String,
 
-    val description: String,
+    var description: String,
 
-    val status: String,
+    var status: String,
 
-    val priority: String,
+    var priority: String,
 
-    val completedTasks: Int,
+    var completedTasks: Int,
 
-    val totalTasks: Int,
+    var totalTasks: Int,
 
-    val dueDate: LocalDate,
+    var dueDate: LocalDate,
 
-    val startDate: LocalDate
+    var startDate: LocalDate,
 )
